@@ -1,1 +1,2 @@
--r base.txtgunicorn==19.5.0
+-r base.txt
+gunicorn==19.5.0
