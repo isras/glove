@@ -1,0 +1,5 @@
+Django==1.9.6
+Pillow==3.2.0
+psycopg2==2.6.1
+sqlparse==0.1.19
+wheel==0.29.0
