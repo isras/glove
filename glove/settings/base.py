@@ -2,6 +2,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+SECRET_KEY = '8911-b0bayen76)flqc3muy+u1fvt$&op=oqtm^+@bfu9a(v1x'
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -24,6 +26,7 @@ DJANGO_APPS = (
 LOCAL_APPS = (
     'taxi_amigo',
     'api',
+    'userprofiles',
 )
 
 THIRD_PARTY_APPS = ()
@@ -87,6 +90,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# LOGIN_URL = '/login/'
+
+# LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = '/static/'
 

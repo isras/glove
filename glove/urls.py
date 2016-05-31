@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^', include('taxi_amigo.urls')),
     url(r'^admin/', admin.site.urls),
     # url(r'^api/', include(router.urls)),
+    url(r'^', include('userprofiles.urls', namespace='userprofiles'),),
     url(r'^api/v1/', include('api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
