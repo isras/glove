@@ -15,30 +15,42 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class DriverSerializer(serializers.ModelSerializer):
+    enterprise = EnterpriseSerializer()
+
     class Meta:
         model = Driver
         fields = ('id', 'first_name', 'last_name', 'email', 'latitude', 'longitude', 'enterprise',)
 
 
 class TypeServiceSerializer(serializers.ModelSerializer):
+    driver = DriverSerializer()
+
     class Meta:
         model = TypeService
         fields = ('id', 'service_name', 'rate', 'driver',)
 
 
 class CouponSerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer()
+
     class Meta:
         model = Coupon
         fields = ('id', 'description', 'customer',)
 
 
 class HistorySerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer()
+    driver = DriverSerializer()
+
     class Meta:
         model = History
         fields = ('id', 'description', 'date', 'customer', 'driver',)
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer()
+    service_type = TypeServiceSerializer()
+
     class Meta:
         model = Order
         fields = ('id', 'description', 'date', 'state', 'service_type', 'customer')
