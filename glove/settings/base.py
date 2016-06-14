@@ -15,12 +15,18 @@ DJANGO_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # Admin
     'django.contrib.admin',
 
     # Rest Framework
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 )
 
 LOCAL_APPS = (
@@ -28,6 +34,12 @@ LOCAL_APPS = (
     'api',
     'userprofiles',
 )
+
+# Sitio creado por defecto
+SITE_ID = 1
+
+# Para que funcione el proceso de registro
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 THIRD_PARTY_APPS = ()
 
@@ -45,10 +57,13 @@ MIDDLEWARE_CLASSES = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASES': (
+        'rest_framework.permissions.IsAuthenticated,'),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    )
+         'rest_framework.authentication.TokenAuthentication',),
+    'PAGE_SIZE': 10
+        #'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
 }
 
 ROOT_URLCONF = 'glove.urls'
