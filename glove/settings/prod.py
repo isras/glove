@@ -4,14 +4,16 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
+SECRET_KEY = os.getenv('GLOVE_SECRET_KEY')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'taxi_amigo',
-        'USER': 'postgres',
-        'PASSWORD': 'Eyetive@2016',  # os.getenv('PLATZI_DB_PASSWORD'),
-        'HOST': '',  # os.getenv('PLATZI_DB_HOST'),
-        'PORT': '',  # os.getenv('PLATZI_DB_PORT'),
+        'NAME': os.getenv('GLOVE_DB_NAME'),
+        'USER': os.getenv('GLOVE_USER_NAME'),
+        'PASSWORD': os.getenv('GLOVE_DB_PASSWORD'),
+        'HOST': os.getenv('GLOVE_DB_HOST'),
+        'PORT': os.getenv('GLOVE_DB_PORT'),
     }
 }
 

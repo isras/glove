@@ -2,8 +2,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = '8911-b0bayen76)flqc3muy+u1fvt$&op=oqtm^+@bfu9a(v1x'
-
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -60,10 +58,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASES': (
         'rest_framework.permissions.IsAuthenticated,'),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-         'rest_framework.authentication.TokenAuthentication',),
+        'rest_framework.authentication.TokenAuthentication',),
     'PAGE_SIZE': 10
-        #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+    # 'rest_framework.authentication.BasicAuthentication',
+    # 'rest_framework.authentication.SessionAuthentication',
 }
 
 ROOT_URLCONF = 'glove.urls'
