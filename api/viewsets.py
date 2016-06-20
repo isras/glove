@@ -1,12 +1,7 @@
-from taxi_amigo.models import Enterprise, Driver, TypeService, Customer
-from .serializers import EnterpriseSerializer, DriverSerializer, TypeServiceSerializer, CustomerSerializer
+from taxi_amigo.models import Driver, ServiceType, Customer
+from .serializers import DriverSerializer, ServiceTypeSerializer, CustomerSerializer
 
 from rest_framework import viewsets
-
-
-class EnterpriseViewSet(viewsets.ModelViewSet):
-    serializer_class = EnterpriseSerializer
-    queryset = Enterprise.objects.all()
 
 
 class DriverViewSet(viewsets.ModelViewSet):
@@ -15,8 +10,8 @@ class DriverViewSet(viewsets.ModelViewSet):
 
 
 class TypeServiceViewSet(viewsets.ModelViewSet):
-    serializer_class = TypeServiceSerializer
-    queryset = TypeService.objects.all()
+    serializer_class = ServiceTypeSerializer
+    queryset = ServiceType.objects.all()
 
 
 class CustomerViewSet(viewsets.ModelViewSet):

@@ -16,11 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from api.viewsets import EnterpriseViewSet, DriverViewSet, TypeServiceViewSet, CustomerViewSet
+from api.viewsets import DriverViewSet, TypeServiceViewSet, CustomerViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'enterprises', EnterpriseViewSet)
 router.register(r'drivers', DriverViewSet)
 router.register(r'typeservices', TypeServiceViewSet)
 router.register(r'customers', CustomerViewSet)
@@ -35,3 +34,4 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
+
