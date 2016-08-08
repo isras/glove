@@ -14,16 +14,17 @@ class Driver(models.Model):
     latitude = models.CharField(default=0.0000000, max_length=200)
     longitude = models.CharField(default=0.0000000, max_length=200)
     notification_id = models.CharField(max_length=200)
-    avaliable = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
     service_type = models.ForeignKey(ServiceType)
     app_user = models.ForeignKey(User)
 
     def __str__(self):
-        return self.app_user.first_name + self.app_user.last_name
+        return self.app_user.first_name + " " + self.app_user.last_name
 
 
 class Customer(models.Model):
     born_date = models.DateField('fecha de nacimiento')
+    phone = models.CharField(max_length=20)
     app_user = models.ForeignKey(User)
 
     def __str__(self):

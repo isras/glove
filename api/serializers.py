@@ -11,19 +11,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    app_user = UserSerializer
+    app_user = UserSerializer()
 
     class Meta:
         model = Customer
-        fields = ('id', 'born_date', 'app_user')
+        fields = ('id', 'born_date', 'phone', 'app_user')
 
 
 class DriverSerializer(serializers.ModelSerializer):
-    app_user = UserSerializer
+    app_user = UserSerializer()
 
     class Meta:
         model = Driver
-        fields = ('id', 'latitude', 'longitude', 'avaliable', 'app_user', 'service_type')
+        fields = ('id', 'latitude', 'longitude', 'available', 'app_user', 'service_type')
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
