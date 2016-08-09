@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -24,7 +26,7 @@ class Driver(models.Model):
 
 class Customer(models.Model):
     born_date = models.DateField('fecha de nacimiento')
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20, default='phone number')
     app_user = models.ForeignKey(User)
 
     def __str__(self):
@@ -52,9 +54,13 @@ class History(models.Model):
 class Order(models.Model):
     description = models.CharField(max_length=250)
     date = models.DateTimeField()
+    initial_address = models.CharField(max_length=250, default='initial_address')
+    final_address = models.CharField(max_length=250, default='final_address')
+    career_total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.0'))
     state = models.CharField(max_length=100)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, default='1')
 
     def __str__(self):
         return self.description
