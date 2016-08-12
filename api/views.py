@@ -67,3 +67,19 @@ class UserList(APIView):
         users = User.objects.all()
         response = self.serializer_class(users, many=True)
         return Response(response.data)
+
+
+class OrderList(APIView):
+        serializer_class = OrderSerializer
+
+        def get(self, request, format=None):
+            orders = Order.objects.all()
+            response = self.serializer_class(orders, many=True)
+            return Response(response.data)
+
+        def post(self, request, format=None):
+            response = self.serializer_class(data=request.data)
+            if response.is_valid():
+                response.save()
+                return Response(response.data, status=status.HTTP_201_CREATED)
+            return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)

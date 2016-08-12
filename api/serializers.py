@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email',)
@@ -27,7 +26,6 @@ class DriverSerializer(serializers.ModelSerializer):
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ServiceType
         fields = ('id', 'service_name', 'rate',)
@@ -51,10 +49,9 @@ class HistorySerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    customer = CustomerSerializer()
-    service_type = ServiceTypeSerializer()
 
     class Meta:
         model = Order
-        fields = ('id', 'description', 'date', 'state', 'service_type', 'customer')
-
+        fields = (
+            'id', 'description', 'date', 'initial_address', 'final_address', 'career_total', 'state', 'service_type',
+            'customer', 'driver')

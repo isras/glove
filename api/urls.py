@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'drivers/$', views.drivers_url),
     url(r'^drivers/(?P<pk>[0-9]+)/$', views.DriverDetail.as_view()),
     url(r'users/$', views.UserList.as_view()),
+    url(r'orders/$', views.OrderList.as_view()),
 ]
