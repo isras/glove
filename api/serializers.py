@@ -10,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    app_user = UserSerializer()
 
     class Meta:
         model = Customer
@@ -18,7 +17,6 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class DriverSerializer(serializers.ModelSerializer):
-    app_user = UserSerializer()
 
     class Meta:
         model = Driver
