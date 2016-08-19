@@ -51,6 +51,27 @@ class History(models.Model):
         return self.description
 
 
+class Delivery(models.Model):
+    name = models.CharField(max_length=250)
+    description = models.CharField(max_length=250)
+    initial_address = models.CharField(max_length=250)
+    destination_address = models.CharField(max_length=250)
+    date = models.DateTimeField()
+    reference = models.CharField(max_length=250)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+
+
+class BookCareer(models.Model):
+    date = models.DateTimeField()
+    hour = models.CharField(max_length=50)
+    address = models.CharField(max_length=250)
+    reference = models.CharField(max_length=250)
+    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+
+
 class Order(models.Model):
     description = models.CharField(max_length=250)
     date = models.DateTimeField()
