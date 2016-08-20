@@ -27,6 +27,8 @@ class Driver(models.Model):
 class Customer(models.Model):
     born_date = models.DateField('fecha de nacimiento')
     phone = models.CharField(max_length=20, default='phone number')
+    home_address = models.CharField(max_length=150)
+    work_address = models.CharField(max_length=150)
     app_user = models.ForeignKey(User)
 
     def __str__(self):
@@ -34,18 +36,12 @@ class Customer(models.Model):
 
 
 class Coupon(models.Model):
-    description = models.TextField(max_length=250)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.description
-
-
-class History(models.Model):
-    description = models.CharField(max_length=250)
+    coupon_code = models.CharField(max_length=50)
     date = models.DateTimeField()
+    description = models.TextField(max_length=250)
+    status = models.BooleanField(default=True)
+    expires = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
@@ -59,21 +55,20 @@ class Delivery(models.Model):
     date = models.DateTimeField()
     reference = models.CharField(max_length=250)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
 
 
-class BookCareer(models.Model):
+class BookTaxi(models.Model):
     date = models.DateTimeField()
     hour = models.CharField(max_length=50)
     address = models.CharField(max_length=250)
     reference = models.CharField(max_length=250)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
 
 
-class Order(models.Model):
-    description = models.CharField(max_length=250)
+class CabRide(models.Model):
     date = models.DateTimeField()
     initial_address = models.CharField(max_length=250, default='initial_address')
     final_address = models.CharField(max_length=250, default='final_address')
@@ -81,7 +76,4 @@ class Order(models.Model):
     state = models.CharField(max_length=100)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, default='1')
-
-    def __str__(self):
-        return self.description
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, default='1', blank=True, null=True)

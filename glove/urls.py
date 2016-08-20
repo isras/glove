@@ -16,13 +16,6 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from api.viewsets import DriverViewSet, TypeServiceViewSet, CustomerViewSet
-from rest_framework.routers import DefaultRouter
-
-router = DefaultRouter()
-router.register(r'drivers', DriverViewSet)
-router.register(r'typeservices', TypeServiceViewSet)
-router.register(r'customers', CustomerViewSet)
 
 urlpatterns = [
     url(r'^', include('taxi_amigo.urls')),

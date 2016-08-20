@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from taxi_amigo.models import Customer, Driver, ServiceType, Coupon, History, Order
+from taxi_amigo.models import Customer, Driver, ServiceType, Coupon, CabRide
 from django.contrib.auth.models import User
 
 
@@ -34,22 +34,13 @@ class CouponSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coupon
-        fields = ('id', 'description', 'customer',)
+        fields = ('id', 'coupon_code', 'date', 'description', 'status', 'expires', 'customer',)
 
 
-class HistorySerializer(serializers.ModelSerializer):
-    customer = CustomerSerializer()
-    driver = DriverSerializer()
+class CabRideSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = History
-        fields = ('id', 'description', 'date', 'customer', 'driver',)
-
-
-class OrderSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Order
+        model = CabRide
         fields = (
-            'id', 'description', 'date', 'initial_address', 'final_address', 'career_total', 'state', 'service_type',
+            'id', 'date', 'initial_address', 'final_address', 'career_total', 'state', 'service_type',
             'customer', 'driver')
