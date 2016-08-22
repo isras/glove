@@ -1,11 +1,12 @@
+from django.contrib.auth.models import User
 from django.http import Http404
 from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from django.contrib.auth.models import User
-from taxi_amigo.models import Driver, CabRide, Customer, Coupon
-from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer
+from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
+    DeliverySerializer, BookTaxiSerializer
+from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi
 
 
 # def index(request):
@@ -70,19 +71,19 @@ class UserList(APIView):
 
 
 class CabRideList(APIView):
-        serializer_class = CabRideSerializer
+    serializer_class = CabRideSerializer
 
-        def get(self, request, format=None):
-            cab_rides = CabRide.objects.all()
-            response = self.serializer_class(cab_rides, many=True)
-            return Response(response.data)
+    def get(self, request, format=None):
+        cab_rides = CabRide.objects.all()
+        response = self.serializer_class(cab_rides, many=True)
+        return Response(response.data)
 
-        def post(self, request, format=None):
-            response = self.serializer_class(data=request.data)
-            if response.is_valid():
-                response.save()
-                return Response(response.data, status=status.HTTP_201_CREATED)
-            return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, format=None):
+        response = self.serializer_class(data=request.data)
+        if response.is_valid():
+            response.save()
+            return Response(response.data, status=status.HTTP_201_CREATED)
+        return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CabRideDetail(APIView):
@@ -175,3 +176,95 @@ class CouponList(APIView):
             response.save()
             return Response(response.data, status=status.HTTP_201_CREATED)
         return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeliveryList(APIView):
+    serializer_class = DeliverySerializer
+
+    def get(self, request, format=None):
+        deliveries = Delivery.objects.all()
+        response = self.serializer_class(deliveries, many=True)
+        return Response(response.data)
+
+    def post(self, request, format=None):
+        response = self.serializer_class(data=request.data)
+        if response.is_valid():
+            response.save()
+            return Response(response.data, status=status.HTTP_201_CREATED)
+        return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeliveryDetail(APIView):
+    """
+    Obtener, actualizar o eliminar un conductor
+    """
+
+    def get_object(self, pk):
+        try:
+            return Delivery.objects.get(pk=pk)
+        except Delivery.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        delivery = self.get_object(pk)
+        serializer = DeliverySerializer(delivery)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        delivery = self.get_object(pk)
+        serializer = DeliverySerializer(delivery, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        delivery = self.get_object(pk)
+        delivery.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class BookTaxiList(APIView):
+    serializer_class = BookTaxiSerializer
+
+    def get(self, request, format=None):
+        book_taxies = BookTaxi.objects.all()
+        response = self.serializer_class(book_taxies, many=True)
+        return Response(response.data)
+
+    def post(self, request, format=None):
+        response = self.serializer_class(data=request.data)
+        if response.is_valid():
+            response.save()
+            return Response(response.data, status=status.HTTP_201_CREATED)
+        return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BookTaxiDetail(APIView):
+    """
+    Obtener, actualizar o eliminar un conductor
+    """
+
+    def get_object(self, pk):
+        try:
+            return BookTaxi.objects.get(pk=pk)
+        except BookTaxi.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        book_taxi = self.get_object(pk)
+        serializer = BookTaxiSerializer(book_taxi)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        book_taxi = self.get_object(pk)
+        serializer = BookTaxiSerializer(book_taxi, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        book_taxi = self.get_object(pk)
+        book_taxi.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

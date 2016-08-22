@@ -10,4 +10,8 @@ urlpatterns = [
     url(r'customers/$', views.CustomerList.as_view()),
     url(r'^customers/(?P<pk>[0-9]+)/$', views.CustomerDetail.as_view()),
     url(r'^coupons/$', views.CouponList.as_view()),
+    url(r'^delivery/$', views.DeliveryList.as_view()),
+    url(r'^delivery/(?P<pk>[0-9]+)/$', views.DeliveryDetail.as_view()),
+    url(r'^book_taxi/$', views.BookTaxiList.as_view()),
+    url(r'^book_taxi/(?P<pk>[0-9]+)/$', views.BookTaxiDetail.as_view()),
 ]
