@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^delivery/(?P<pk>[0-9]+)/$', views.DeliveryDetail.as_view()),
     url(r'^book_taxi/$', views.BookTaxiList.as_view()),
     url(r'^book_taxi/(?P<pk>[0-9]+)/$', views.BookTaxiDetail.as_view()),
+    url(r'^service_type/$', views.ServiceTypeList.as_view()),
 ]

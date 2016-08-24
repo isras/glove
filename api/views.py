@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
-    DeliverySerializer, BookTaxiSerializer
-from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi
+    DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer
+from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi, ServiceType
 
 
 # def index(request):
@@ -268,3 +268,19 @@ class BookTaxiDetail(APIView):
         book_taxi = self.get_object(pk)
         book_taxi.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ServiceTypeList(APIView):
+    serializer_class = ServiceTypeSerializer
+
+    def get(self, request, format=None):
+        service_types = ServiceType.objects.all()
+        response = self.serializer_class(service_types, many=True)
+        return Response(response.data)
+
+    def post(self, request, format=None):
+        response = self.serializer_class(data=request.data)
+        if response.is_valid():
+            response.save()
+            return Response(response.data, status=status.HTTP_201_CREATED)
+        return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
