@@ -39,13 +39,16 @@ SITE_ID = 1
 # Para que funcione el proceso de registro
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'corsheaders',
+)
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -65,6 +68,8 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = 'glove.urls'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
