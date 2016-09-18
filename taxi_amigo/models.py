@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from django.db import models
-from django.contrib.auth.models import User
+from userprofiles.models import User
 
 
 class ServiceType(models.Model):
@@ -41,7 +41,7 @@ class Coupon(models.Model):
     description = models.TextField(max_length=250)
     status = models.BooleanField(default=True)
     expires = models.DateTimeField()
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
@@ -51,10 +51,14 @@ class Delivery(models.Model):
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=250)
     initial_address = models.CharField(max_length=250)
+    initial_latitude = models.CharField(default=0.0000000, max_length=200)
+    initial_longitude = models.CharField(default=0.000000, max_length=200)
     destination_address = models.CharField(max_length=250)
+    destination_latitude = models.CharField(default=0.0000000, max_length=200)
+    destination_longitude = models.CharField(default=0.000000, max_length=200)
     date = models.DateTimeField()
     reference = models.CharField(max_length=250)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
 
 
@@ -62,9 +66,11 @@ class BookTaxi(models.Model):
     date = models.DateTimeField()
     hour = models.CharField(max_length=50)
     address = models.CharField(max_length=250)
+    latitude = models.CharField(default=0.000000, max_length=200)
+    longitude = models.CharField(default=0.00000, max_length=200)
     reference = models.CharField(max_length=250)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
 
 
@@ -75,5 +81,5 @@ class CabRide(models.Model):
     career_total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.0'))
     state = models.CharField(max_length=100)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, default='1', blank=True, null=True)

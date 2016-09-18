@@ -1,8 +1,9 @@
-from django.contrib.auth.models import User
+from userprofiles.models import User
 from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics
 
 from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
     DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer
@@ -284,3 +285,51 @@ class ServiceTypeList(APIView):
             response.save()
             return Response(response.data, status=status.HTTP_201_CREATED)
         return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomerCabRideHistoryList(generics.ListAPIView):
+    serializer_class = CabRideSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return CabRide.objects.filter(customer__username=username)
+
+
+class CustomerBookTaxiHistoryList(generics.ListAPIView):
+    serializer_class = BookTaxiSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return BookTaxi.objects.filter(customer__username=username)
+
+
+class CustomerDeliveryHistoryList(generics.ListAPIView):
+    serializer_class = DeliverySerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return Delivery.objects.filter(customer__username=username)
+
+
+class CustomerCouponsHistoryList(generics.ListAPIView):
+    serializer_class = CouponSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return Coupon.objects.filter(customer__username=username)

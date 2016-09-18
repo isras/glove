@@ -1,10 +1,12 @@
 from django.contrib import admin
+from userprofiles.models import User
 from .models import Driver, Customer, ServiceType, Coupon, CabRide, BookTaxi, Delivery
 
 # Register your models here.
 admin.site.register(Driver)
 admin.site.register(Customer)
 admin.site.register(ServiceType)
+admin.site.register(User)
 
 
 class CouponAdmin(admin.ModelAdmin):

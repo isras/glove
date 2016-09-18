@@ -36,6 +36,9 @@ LOCAL_APPS = (
 # Sitio creado por defecto
 SITE_ID = 1
 
+# Para decir a Django usar mi modelo User predefinido
+AUTH_USER_MODEL = 'userprofiles.User'
+
 # Para que funcione el proceso de registro
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -66,6 +69,15 @@ REST_FRAMEWORK = {
     # 'rest_framework.authentication.BasicAuthentication',
     # 'rest_framework.authentication.SessionAuthentication',
 }
+
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'api.serializers.LoginSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'api.serializers.RegisterSerializer',
+}
+
 
 ROOT_URLCONF = 'glove.urls'
 
