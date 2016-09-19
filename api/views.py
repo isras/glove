@@ -71,6 +71,24 @@ class UserList(APIView):
         return Response(response.data)
 
 
+class UserDriverList(APIView):
+    serializer_class = UserSerializer
+
+    def get(self, request, format=None):
+        users = User.objects.filter(is_driver=1)
+        response = self.serializer_class(users, many=True)
+        return Response(response.data)
+
+
+class UserCustomerList(APIView):
+    serializer_class = UserSerializer
+
+    def get(self, request, format=None):
+        users = User.objects.filter(is_customer=1)
+        response = self.serializer_class(users, many=True)
+        return Response(response.data)
+
+
 class CabRideList(APIView):
     serializer_class = CabRideSerializer
 
@@ -333,3 +351,39 @@ class CustomerCouponsHistoryList(generics.ListAPIView):
         """
         username = self.kwargs['username']
         return Coupon.objects.filter(customer__username=username)
+
+
+class DriverDeliveryHistoryList(generics.ListAPIView):
+    serializer_class = DeliverySerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return Delivery.objects.filter(driver__username=username)
+
+
+class DriverBookTaxiHistoryList(generics.ListAPIView):
+    serializer_class = BookTaxiSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return BookTaxi.objects.filter(driver__username=username)
+
+
+class DriverCabRideHistoryList(generics.ListAPIView):
+    serializer_class = CabRideSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return CabRide.objects.filter(driver__username=username)

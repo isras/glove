@@ -130,6 +130,8 @@ class RegisterSerializer(serializers.Serializer):
         required=allauth_settings.USERNAME_REQUIRED
     )
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
+    first_name = serializers.CharField(required=True, write_only=True)
+    last_name = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
     is_driver = serializers.BooleanField(required=True, write_only=True)
@@ -163,6 +165,8 @@ class RegisterSerializer(serializers.Serializer):
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
             'is_driver': self.validated_data.get('is_driver', ''),
             'is_customer': self.validated_data.get('is_customer', ''),
         }

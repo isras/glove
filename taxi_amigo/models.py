@@ -58,8 +58,9 @@ class Delivery(models.Model):
     destination_longitude = models.CharField(default=0.000000, max_length=200)
     date = models.DateTimeField()
     reference = models.CharField(max_length=250)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
+                               blank=True, null=True)
 
 
 class BookTaxi(models.Model):
@@ -70,8 +71,9 @@ class BookTaxi(models.Model):
     longitude = models.CharField(default=0.00000, max_length=200)
     reference = models.CharField(max_length=250)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
+                               blank=True, null=True)
 
 
 class CabRide(models.Model):
@@ -81,5 +83,6 @@ class CabRide(models.Model):
     career_total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.0'))
     state = models.CharField(max_length=100)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, default='1', blank=True, null=True)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
+                               default='1', blank=True, null=True)
