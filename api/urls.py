@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^customer_delivery_history/(?P<username>.+)/$', views.CustomerDeliveryHistoryList.as_view()),
     url('^customer_book_taxi_history/(?P<username>.+)/$', views.CustomerBookTaxiHistoryList.as_view()),
     url(r'^coupons/$', views.CouponList.as_view()),
+    url(r'^coupons/(?P<pk>[0-9]+)/$', views.CouponDetail.as_view()),
     url(r'^delivery/$', views.DeliveryList.as_view()),
     url(r'^delivery/(?P<pk>[0-9]+)/$', views.DeliveryDetail.as_view()),
     url(r'^book_taxi/$', views.BookTaxiList.as_view()),

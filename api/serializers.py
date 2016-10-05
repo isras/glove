@@ -43,11 +43,15 @@ class LoginSerializer(serializers.Serializer):
 
         if username and password and is_driver or is_customer:
             user_tmp = authenticate(username=username, password=password)
-            if user_tmp.is_driver == 1 and is_customer == 0:
-                user = authenticate(username=username, password=password)
+            if user_tmp is not None:
+                if user_tmp.is_driver == 1 and is_customer == 0:
+                    user = authenticate(username=username, password=password)
 
-            if user_tmp.is_customer == 1 and is_driver == 0:
-                user = authenticate(username=username, password=password)
+                if user_tmp.is_customer == 1 and is_driver == 0:
+                    user = authenticate(username=username, password=password)
+            else:
+                msg = _('User dont exits')
+                raise exceptions.ValidationError(msg)
         else:
             msg = _('Must include "username" and "password".')
             raise exceptions.ValidationError(msg)
