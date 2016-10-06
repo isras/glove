@@ -77,12 +77,12 @@ class BookTaxi(models.Model):
 
 
 class CabRide(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(blank=True)
     initial_address = models.CharField(max_length=250, default='initial_address')
     final_address = models.CharField(max_length=250, default='final_address')
     career_total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.0'))
-    state = models.CharField(max_length=100)
-    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
+    state = models.CharField(max_length=100, blank=True)
+    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE, blank=True)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE, blank=True)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
                                default='1', blank=True, null=True)

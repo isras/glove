@@ -50,7 +50,7 @@ class LoginSerializer(serializers.Serializer):
                 if user_tmp.is_customer == 1 and is_driver == 0:
                     user = authenticate(username=username, password=password)
             else:
-                msg = _('User dont exits')
+                msg = _('El usuario no existe')
                 raise exceptions.ValidationError(msg)
         else:
             msg = _('Must include "username" and "password".')
