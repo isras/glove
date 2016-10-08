@@ -125,14 +125,15 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
-
     """
     User model w/o password
     """
+
     class Meta:
         model = UserModel
-        fields = ('id', 'username', 'email', 'first_name', 'last_name')
-        read_only_fields = ('email', )
+        fields = (
+            'id', 'username', 'email', 'first_name', 'last_name', 'service_type', 'available', 'latitude', 'longitude')
+        read_only_fields = ('email',)
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -200,7 +201,9 @@ class RegisterSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_driver', 'is_customer')
+        fields = (
+            'id', 'username', 'first_name', 'last_name', 'email', 'is_driver', 'is_customer', 'service_type',
+            'available', 'latitude', 'longitude')
 
 
 class CustomerSerializer(serializers.ModelSerializer):
