@@ -49,9 +49,6 @@ class LoginSerializer(serializers.Serializer):
 
                 if user_tmp.is_customer == 1 and is_driver == 0:
                     user = authenticate(username=username, password=password)
-            else:
-                msg = _('El usuario no existe')
-                raise exceptions.ValidationError(msg)
         else:
             msg = _('Must include "username" and "password".')
             raise exceptions.ValidationError(msg)
@@ -125,6 +122,17 @@ class LoginSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+
+    """
+    User model w/o password
+    """
+    class Meta:
+        model = UserModel
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')
+        read_only_fields = ('email', )
 
 
 class RegisterSerializer(serializers.Serializer):
