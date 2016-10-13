@@ -41,6 +41,7 @@ class Coupon(models.Model):
     description = models.TextField(max_length=250)
     status = models.BooleanField(default=True)
     expires = models.DateTimeField()
+    coupon_value = models.DecimalField(default=0.0, max_digits=10, decimal_places=2, blank=True)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -58,6 +59,8 @@ class Delivery(models.Model):
     destination_longitude = models.CharField(default=0.000000, max_length=200)
     date = models.DateTimeField()
     reference = models.CharField(max_length=250)
+    delivery_total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2, blank=True)
+    state = models.CharField(max_length=50, blank=True)
     customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
                                blank=True, null=True)
@@ -70,6 +73,10 @@ class BookTaxi(models.Model):
     latitude = models.CharField(default=0.000000, max_length=200)
     longitude = models.CharField(default=0.00000, max_length=200)
     reference = models.CharField(max_length=250)
+    destination_address = models.CharField(max_length=250, blank=True)
+    destination_latitude = models.DecimalField(default=0.000000, max_digits=10, decimal_places=10, blank=True)
+    destination_longitude = models.DecimalField(default=0.00000, max_digits=10, decimal_places=10, blank=True)
+    state = models.CharField(max_length=50, blank=True)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
     customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
@@ -83,6 +90,7 @@ class CabRide(models.Model):
     career_total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.0'))
     state = models.CharField(max_length=100, blank=True)
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE, blank=True)
-    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE, blank=True)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE,
+                                 blank=True)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
                                default='1', blank=True, null=True)

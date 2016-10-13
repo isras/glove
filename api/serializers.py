@@ -227,7 +227,7 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coupon
-        fields = ('id', 'coupon_code', 'date', 'description', 'status', 'expires', 'customer',)
+        fields = ('id', 'coupon_code', 'date', 'description', 'status', 'expires', 'coupon_value', 'customer',)
 
 
 class CabRideSerializer(serializers.ModelSerializer):
@@ -244,12 +244,12 @@ class DeliverySerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'description', 'initial_address', 'initial_latitude', 'initial_longitude',
             'destination_address', 'destination_latitude', 'destination_longitude',
-            'date', 'reference',
-            'customer', 'driver')
+            'date', 'reference', 'delivery_total', 'state', 'customer', 'driver')
 
 
 class BookTaxiSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookTaxi
         fields = (
-            'id', 'date', 'hour', 'address', 'latitude', 'longitude', 'reference', 'service_type', 'customer', 'driver')
+            'id', 'date', 'hour', 'address', 'latitude', 'longitude', 'reference', 'destination_address',
+            'destination_latitude', 'destination_longitude', 'state', 'service_type', 'customer', 'driver')
