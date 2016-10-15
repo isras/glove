@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, get_user_model
 from django.conf import settings
-from taxi_amigo.models import Customer, Driver, ServiceType, Coupon, CabRide, Delivery, BookTaxi
+from taxi_amigo.models import Customer, Driver, ServiceType, Coupon, CabRide, Delivery, BookTaxi, ValueSettings
 from userprofiles.models import User
 
 from django.utils.translation import ugettext_lazy as _
@@ -196,6 +196,12 @@ class RegisterSerializer(serializers.Serializer):
         user.save()
 
         return user
+
+
+class ValueSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ValueSettings
+        fields = {'id', 'COUPON_VALUE', 'COUPON_NEW_USER_VALUE'}
 
 
 class UserSerializer(serializers.ModelSerializer):

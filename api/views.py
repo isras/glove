@@ -3,7 +3,8 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, viewsets
+from django_filters import rest_framework as filters
 
 from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
     DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer
@@ -381,6 +382,13 @@ class CustomerCouponsHistoryList(generics.ListAPIView):
         """
         username = self.kwargs['username']
         return Coupon.objects.filter(customer__username=username)
+
+
+class CouponCodeViewSet(viewsets.ModelViewSet):
+    queryset = Coupon.objects.all()
+    serializer_class = CouponSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('coupon_code',)
 
 
 class DriverDeliveryHistoryList(generics.ListAPIView):

@@ -4,6 +4,11 @@ from django.db import models
 from userprofiles.models import User
 
 
+class ValueSettings(models.Model):
+    COUPON_VALUE = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+    COUPON_NEW_USER_VALUE = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+
+
 class ServiceType(models.Model):
     service_name = models.CharField(max_length=200)
     rate = models.DecimalField(max_digits=10, decimal_places=2)

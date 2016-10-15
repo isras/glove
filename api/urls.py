@@ -1,7 +1,12 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from rest_framework import routers
 from api import views
 
+router = routers.DefaultRouter()
+router.register(r'coupons', views.CouponCodeViewSet)
+
 urlpatterns = [
+    url(r'^', include(router.urls)),
     url(r'drivers/$', views.UserDriverList.as_view()),
     url(r'^drivers/(?P<pk>[0-9]+)/$', views.DriverDetail.as_view()),
     url(r'^driver_cab_ride_history/(?P<username>.+)/$', views.DriverCabRideHistoryList.as_view()),
