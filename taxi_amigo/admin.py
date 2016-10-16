@@ -1,6 +1,6 @@
 from django.contrib import admin
 from userprofiles.models import User
-from .models import Driver, Customer, ServiceType, Coupon, CabRide, BookTaxi, Delivery
+from .models import Driver, Customer, ServiceType, Coupon, CabRide, BookTaxi, Delivery, ValueSettings
 
 # Register your models here.
 admin.site.register(Driver)
@@ -69,3 +69,4 @@ class DeliveryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Delivery, DeliveryAdmin)
+admin.site.register(ValueSettings)

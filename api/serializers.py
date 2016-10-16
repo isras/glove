@@ -201,7 +201,7 @@ class RegisterSerializer(serializers.Serializer):
 class ValueSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ValueSettings
-        fields = {'id', 'COUPON_VALUE', 'COUPON_NEW_USER_VALUE'}
+        fields = ('id', 'COUPON_VALUE', 'COUPON_NEW_USER_VALUE')
 
 
 class UserSerializer(serializers.ModelSerializer):
