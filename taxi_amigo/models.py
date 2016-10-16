@@ -41,13 +41,16 @@ class Customer(models.Model):
 
 
 class Coupon(models.Model):
-    coupon_code = models.CharField(max_length=50)
-    date = models.DateTimeField()
-    description = models.TextField(max_length=250)
+    coupon_code = models.CharField(max_length=50, blank=True)
+    date = models.DateTimeField(blank=True)
+    description = models.TextField(max_length=250, blank=True)
     status = models.BooleanField(default=True)
-    expires = models.DateTimeField()
+    expires = models.DateTimeField(blank=True)
     coupon_value = models.DecimalField(default=0.0, max_digits=10, decimal_places=2, blank=True)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE,
+                                 blank=True)
+    driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
+                               blank=True, null=True)
 
     def __str__(self):
         return self.description

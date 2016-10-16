@@ -233,7 +233,7 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coupon
-        fields = ('id', 'coupon_code', 'date', 'description', 'status', 'expires', 'coupon_value', 'customer',)
+        fields = ('id', 'coupon_code', 'date', 'description', 'status', 'expires', 'coupon_value', 'customer', 'driver')
 
 
 class CabRideSerializer(serializers.ModelSerializer):

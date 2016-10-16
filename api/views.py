@@ -7,8 +7,8 @@ from rest_framework import generics, viewsets
 from django_filters import rest_framework as filters
 
 from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
-    DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer
-from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi, ServiceType
+    DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer, ValueSettingsSerializer
+from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi, ServiceType, ValueSettings
 
 
 # def index(request):
@@ -336,6 +336,15 @@ class ServiceTypeList(APIView):
         return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ValueSettingsList(APIView):
+    serializer_class = ValueSettingsSerializer
+
+    def get(self, request, format=None):
+        value_settings = ValueSettings.objects.all()
+        response = self.serializer_class(value_settings, many=True)
+        return Response(response.data)
+
+
 class CustomerCabRideHistoryList(generics.ListAPIView):
     serializer_class = CabRideSerializer
 
@@ -425,3 +434,15 @@ class DriverCabRideHistoryList(generics.ListAPIView):
         """
         username = self.kwargs['username']
         return CabRide.objects.filter(driver__username=username)
+
+
+class DriverCouponsHistoryList(generics.ListAPIView):
+    serializer_class = CouponSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        username = self.kwargs['username']
+        return Coupon.objects.filter(driver__username=username)

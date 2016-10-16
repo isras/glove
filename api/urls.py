@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^driver_cab_ride_history/(?P<username>.+)/$', views.DriverCabRideHistoryList.as_view()),
     url(r'^driver_delivery_history/(?P<username>.+)/$', views.DriverDeliveryHistoryList.as_view()),
     url(r'^driver_book_taxi_history/(?P<username>.+)/$', views.DriverBookTaxiHistoryList.as_view()),
+    url(r'^driver_coupon_history/(?P<username>.+)/$', views.DriverCouponsHistoryList.as_view()),
     url(r'users/$', views.UserList.as_view()),
     url(r'cab_rides/$', views.CabRideList.as_view()),
     url(r'cab_rides/(?P<pk>[0-9]+)/$', views.CabRideDetail.as_view()),
@@ -28,4 +29,5 @@ urlpatterns = [
     url(r'^book_taxi/$', views.BookTaxiList.as_view()),
     url(r'^book_taxi/(?P<pk>[0-9]+)/$', views.BookTaxiDetail.as_view()),
     url(r'^service_type/$', views.ServiceTypeList.as_view()),
+    url(r'value_settings/$', views.ValueSettingsList.as_view()),
 ]
