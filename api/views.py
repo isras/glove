@@ -354,7 +354,7 @@ class CustomerCabRideHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return CabRide.objects.filter(customer__username=username)
+        return CabRide.objects.filter(customer__username=username).order_by('-date')
 
 
 class CustomerBookTaxiHistoryList(generics.ListAPIView):
@@ -366,7 +366,7 @@ class CustomerBookTaxiHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return BookTaxi.objects.filter(customer__username=username)
+        return BookTaxi.objects.filter(customer__username=username).order_by('-date')
 
 
 class CustomerDeliveryHistoryList(generics.ListAPIView):
@@ -378,7 +378,7 @@ class CustomerDeliveryHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return Delivery.objects.filter(customer__username=username)
+        return Delivery.objects.filter(customer__username=username).order_by('-date')
 
 
 class CustomerCouponsHistoryList(generics.ListAPIView):
@@ -390,11 +390,11 @@ class CustomerCouponsHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return Coupon.objects.filter(customer__username=username)
+        return Coupon.objects.filter(customer__username=username).order_by('-date')
 
 
 class CouponCodeViewSet(viewsets.ModelViewSet):
-    queryset = Coupon.objects.all()
+    queryset = Coupon.objects.all().order_by('-date')
     serializer_class = CouponSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('coupon_code',)
@@ -421,7 +421,7 @@ class DriverBookTaxiHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return BookTaxi.objects.filter(driver__username=username)
+        return BookTaxi.objects.filter(driver__username=username).order_by('-date')
 
 
 class DriverCabRideHistoryList(generics.ListAPIView):
@@ -433,7 +433,7 @@ class DriverCabRideHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return CabRide.objects.filter(driver__username=username)
+        return CabRide.objects.filter(driver__username=username).order_by('-date')
 
 
 class DriverCouponsHistoryList(generics.ListAPIView):
@@ -445,4 +445,4 @@ class DriverCouponsHistoryList(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         username = self.kwargs['username']
-        return Coupon.objects.filter(driver__username=username)
+        return Coupon.objects.filter(driver__username=username).order_by('-date')
