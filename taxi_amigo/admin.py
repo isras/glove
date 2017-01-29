@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from taxi_amigo.forms import BookTaxiForm
 from userprofiles.models import User
 from .models import Driver, Customer, ServiceType, Coupon, CabRide, BookTaxi, Delivery, ValueSettings
 
@@ -34,22 +36,22 @@ class CabRideAdmin(admin.ModelAdmin):
 
         return super(CabRideAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
-
 admin.site.register(CabRide, CabRideAdmin)
 
 
 class BookTaxiAdmin(admin.ModelAdmin):
     list_display = ('customer', 'service_type', 'date', 'hour', 'address', 'reference', 'driver')
+    form = BookTaxiForm
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "driver":
             kwargs["queryset"] = User.objects.filter(is_driver=1)
+            print ("Hola mundo")
 
         if db_field.name == "customer":
             kwargs["queryset"] = User.objects.filter(is_customer=1)
 
         return super(BookTaxiAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
 
 admin.site.register(BookTaxi, BookTaxiAdmin)
 
@@ -66,7 +68,6 @@ class DeliveryAdmin(admin.ModelAdmin):
             kwargs["queryset"] = User.objects.filter(is_customer=1)
 
         return super(DeliveryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
 
 admin.site.register(Delivery, DeliveryAdmin)
 admin.site.register(ValueSettings)
