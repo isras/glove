@@ -22,11 +22,12 @@ class BookTaxiForm(forms.ModelForm):
 
         # Podemos hacer lo que queramos antes de guardarlo
         valor_propiedad = obj_propiedad.driver.player_id
+        book_hour = obj_propiedad.hour
 
         if obj_propiedad.driver is None:
             print ("EL TAXISTA NO HA SIDO ASIGNADO")
         else:
-            if valor_propiedad == "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx":
+            if valor_propiedad == "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" or valor_propiedad == "":
                 print ("AQUI ENTRO PORQUE EL VALOR ES POR DEFECTO")
             else:
                 print (valor_propiedad)
@@ -34,7 +35,7 @@ class BookTaxiForm(forms.ModelForm):
                           "Authorization": "Basic NDZjNzA5ZGEtYzE5Mi00ZTAxLWFiODItZTFjODk5N2ZkZjdk"}
 
                 payload = dict(app_id="3a469011-9fde-40aa-bbd9-a25026f29222", include_player_ids=[valor_propiedad],
-                               contents={"en": "PRUEBA NOTIFICACION"})
+                               contents={"en": "Usted tiene una reservacion de carrera a las: " + book_hour})
 
                 req = requests.post("https://onesignal.com/api/v1/notifications", headers=header,
                                     data=json.dumps(payload))

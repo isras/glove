@@ -46,7 +46,6 @@ class BookTaxiAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "driver":
             kwargs["queryset"] = User.objects.filter(is_driver=1)
-            print ("Hola mundo")
 
         if db_field.name == "customer":
             kwargs["queryset"] = User.objects.filter(is_customer=1)
