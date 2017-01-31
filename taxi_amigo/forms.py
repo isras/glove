@@ -21,22 +21,25 @@ class BookTaxiForm(forms.ModelForm):
         obj_propiedad = super(BookTaxiForm, self).save(*args, **kwargs)
 
         # Podemos hacer lo que queramos antes de guardarlo
-        valor_propiedad = obj_propiedad.driver
+        valor_propiedad = obj_propiedad.driver.player_id
 
         if obj_propiedad.driver is None:
             print ("EL TAXISTA NO HA SIDO ASIGNADO")
         else:
-            print (valor_propiedad)
-            header = {"Content-Type": "application/json; charset=utf-8",
-                      "Authorization": "Basic NDZjNzA5ZGEtYzE5Mi00ZTAxLWFiODItZTFjODk5N2ZkZjdk"}
+            if valor_propiedad == "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx":
+                print ("AQUI ENTRO PORQUE EL VALOR ES POR DEFECTO")
+            else:
+                print (valor_propiedad)
+                header = {"Content-Type": "application/json; charset=utf-8",
+                          "Authorization": "Basic NDZjNzA5ZGEtYzE5Mi00ZTAxLWFiODItZTFjODk5N2ZkZjdk"}
 
-            payload = dict(app_id="3a469011-9fde-40aa-bbd9-a25026f29222",
-                           include_player_ids=["2b4ac3aa-82a2-40bd-805a-da5931b4e597"],
-                           contents={"en": "PRUEBA NOTIFICACION"})
+                payload = dict(app_id="3a469011-9fde-40aa-bbd9-a25026f29222", include_player_ids=[valor_propiedad],
+                               contents={"en": "PRUEBA NOTIFICACION"})
 
-            req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+                req = requests.post("https://onesignal.com/api/v1/notifications", headers=header,
+                                    data=json.dumps(payload))
 
-            print(req.status_code, req.reason)
+                print(req.status_code, req.reason)
 
         # Y finalmente lo guardamos
         # obj_propiedad.save()

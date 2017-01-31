@@ -132,7 +132,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = (
-            'id', 'username', 'email', 'first_name', 'last_name', 'service_type', 'available', 'latitude', 'longitude')
+            'id', 'username', 'email', 'first_name', 'last_name', 'service_type', 'available', 'latitude', 'longitude',
+            'player_id', 'phone', 'address', 'mobile_phone',)
         read_only_fields = ('email',)
 
 
@@ -149,6 +150,10 @@ class RegisterSerializer(serializers.Serializer):
     password2 = serializers.CharField(required=True, write_only=True)
     is_driver = serializers.BooleanField(required=True, write_only=True)
     is_customer = serializers.BooleanField(required=True, write_only=True)
+    player_id = serializers.CharField(required=False, write_only=True)
+    phone = serializers.CharField(required=False, write_only=True)
+    address = serializers.CharField(required=False, write_only=True)
+    mobile_phone = serializers.CharField(required=False, write_only=True)
 
     def validate_username(self, username):
         username = get_adapter().clean_username(username)
@@ -182,6 +187,10 @@ class RegisterSerializer(serializers.Serializer):
             'last_name': self.validated_data.get('last_name', ''),
             'is_driver': self.validated_data.get('is_driver', ''),
             'is_customer': self.validated_data.get('is_customer', ''),
+            'player_id': self.validated_data.get('player_id', ''),
+            'phone': self.validated_data.get('phone', ''),
+            'address': self.validated_data.get('address', ''),
+            'mobile_phone': self.validated_data.get('mobile_phone', ''),
         }
 
     def save(self, request):
@@ -193,6 +202,10 @@ class RegisterSerializer(serializers.Serializer):
         setup_user_email(request, user, [])
         user.is_driver = self.cleaned_data.get('is_driver')
         user.is_customer = self.cleaned_data.get('is_customer')
+        user.player_id = self.cleaned_data.get('player_id')
+        user.phone = self.cleaned_data.get('phone')
+        user.address = self.cleaned_data.get('address')
+        user.mobile_phone = self.cleaned_data.get('mobile_phone')
         user.save()
 
         return user
@@ -209,7 +222,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'username', 'first_name', 'last_name', 'email', 'is_driver', 'is_customer', 'service_type',
-            'available', 'latitude', 'longitude')
+            'available', 'latitude', 'longitude', 'player_id', 'phone', 'address', 'mobile_phone')
 
 
 class CustomerSerializer(serializers.ModelSerializer):
