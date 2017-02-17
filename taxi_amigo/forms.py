@@ -34,8 +34,11 @@ class BookTaxiForm(forms.ModelForm):
                 header = {"Content-Type": "application/json; charset=utf-8",
                           "Authorization": "Basic NDZjNzA5ZGEtYzE5Mi00ZTAxLWFiODItZTFjODk5N2ZkZjdk"}
 
+                data = {"client": obj_propiedad.customer.id, "type": "reserva",
+                        'id_notification': obj_propiedad.customer.player_id}
+
                 payload = dict(app_id="3a469011-9fde-40aa-bbd9-a25026f29222", include_player_ids=[valor_propiedad],
-                               contents={"en": "Usted tiene una reservacion de carrera a las: " + book_hour})
+                               contents={"en": "Usted tiene una reservacion de carrera a las: " + book_hour}, data=data)
 
                 req = requests.post("https://onesignal.com/api/v1/notifications", headers=header,
                                     data=json.dumps(payload))
