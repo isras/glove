@@ -11,6 +11,7 @@ class ValueSettings(models.Model):
 
 class ServiceType(models.Model):
     service_name = models.CharField(max_length=200)
+    type_image = models.ImageField(upload_to='service_type')
     rate = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):

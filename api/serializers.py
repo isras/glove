@@ -240,7 +240,7 @@ class DriverSerializer(serializers.ModelSerializer):
 class ServiceTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceType
-        fields = ('id', 'service_name', 'rate',)
+        fields = ('id', 'service_name', 'type_image', 'rate',)
 
 
 class CouponSerializer(serializers.ModelSerializer):
