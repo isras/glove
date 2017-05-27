@@ -2,7 +2,7 @@ from glove.settings.base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['.taxituamigo.com']
+ALLOWED_HOSTS = ['.eyetive.com']
 
 SECRET_KEY = os.getenv('TAXI_AMIGO_SECRET_KEY')
 
