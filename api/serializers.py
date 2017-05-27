@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, get_user_model
 from django.conf import settings
-from taxi_amigo.models import Customer, Driver, ServiceType, Coupon, CabRide, Delivery, BookTaxi, ValueSettings
+from taxi_amigo.models import Customer, Driver, ServiceType, Coupon, CabRide, Delivery, BookTaxi, ValueSettings, Taxi
 from userprofiles.models import User
 
 from django.utils.translation import ugettext_lazy as _
@@ -272,3 +272,9 @@ class BookTaxiSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'date', 'hour', 'address', 'latitude', 'longitude', 'reference', 'destination_address',
             'destination_latitude', 'destination_longitude', 'state', 'service_type', 'customer', 'driver')
+
+
+class TaxiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Taxi
+        fields = ('id', 'plaque', 'model', 'brand', 'color', 'driver')

@@ -7,8 +7,8 @@ from rest_framework import generics, viewsets
 from django_filters import rest_framework as filters
 
 from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
-    DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer, ValueSettingsSerializer
-from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi, ServiceType, ValueSettings
+    DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer, ValueSettingsSerializer, TaxiSerializer
+from taxi_amigo.models import Driver, CabRide, Customer, Coupon, Delivery, BookTaxi, ServiceType, ValueSettings, Taxi
 
 
 # def index(request):
@@ -70,6 +70,52 @@ class UserList(APIView):
         users = User.objects.all()
         response = self.serializer_class(users, many=True)
         return Response(response.data)
+
+
+class TaxiList(APIView):
+    serializer_class = TaxiSerializer
+
+    def get(self, request, format=None):
+        taxis = Taxi.objects.all()
+        response = self.serializer_class(taxis, many=True)
+        return Response(response.data)
+
+    def post(self, request, format=None):
+        response = self.serializer_class(data=request.data)
+        if response.is_valid():
+            response.save()
+            return Response(response.data, status=status.HTTP_201_CREATED)
+        return Response(response.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TaxiDetail(APIView):
+    """
+    Obtener, actualizar o eliminar una solicitud de carrera
+    """
+
+    def get_object(self, pk):
+        try:
+            return Taxi.objects.get(pk=pk)
+        except CabRide.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        taxi = self.get_object(pk)
+        serializer = TaxiSerializer(taxi)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        taxi = self.get_object(pk)
+        serializer = TaxiSerializer(taxi, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        taxi = self.get_object(pk)
+        taxi.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserDriverList(APIView):
@@ -446,3 +492,6 @@ class DriverCouponsHistoryList(generics.ListAPIView):
         """
         username = self.kwargs['username']
         return Coupon.objects.filter(driver__username=username).order_by('-date')
+
+
+

@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^book_taxi/(?P<pk>[0-9]+)/$', views.BookTaxiDetail.as_view()),
     url(r'^service_type/$', views.ServiceTypeList.as_view()),
     url(r'^value_settings/$', views.ValueSettingsList.as_view()),
+    url(r'^taxi/$', views.TaxiList.as_view()),
+    url(r'^taxi/(?P<pk>[0-9]+)/$', views.TaxiDetail.as_view()),
 ]

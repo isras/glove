@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from taxi_amigo.forms import BookTaxiForm
 from userprofiles.models import User
-from .models import Driver, Customer, ServiceType, Coupon, CabRide, BookTaxi, Delivery, ValueSettings
+from .models import Driver, Customer, ServiceType, Coupon, CabRide, BookTaxi, Delivery, ValueSettings, Taxi
 
 # Register your models here.
 admin.site.register(Driver)
@@ -70,3 +70,16 @@ class DeliveryAdmin(admin.ModelAdmin):
 
 admin.site.register(Delivery, DeliveryAdmin)
 admin.site.register(ValueSettings)
+
+
+class TaxiAdmin(admin.ModelAdmin):
+    list_display = (
+        'driver', 'plaque', 'model', 'brand', 'color')
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "driver":
+            kwargs["queryset"] = User.objects.filter(is_driver=1)
+
+        return super(TaxiAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+admin.site.register(Taxi, TaxiAdmin)

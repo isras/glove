@@ -58,19 +58,20 @@ class Coupon(models.Model):
 
 
 class Delivery(models.Model):
-    name = models.CharField(max_length=250)
-    description = models.CharField(max_length=250)
-    initial_address = models.CharField(max_length=250)
-    initial_latitude = models.CharField(default=0.0000000, max_length=200)
-    initial_longitude = models.CharField(default=0.000000, max_length=200)
-    destination_address = models.CharField(max_length=250)
-    destination_latitude = models.CharField(default=0.0000000, max_length=200)
-    destination_longitude = models.CharField(default=0.000000, max_length=200)
-    date = models.DateTimeField()
-    reference = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, blank=True)
+    description = models.CharField(max_length=250, blank=True)
+    initial_address = models.CharField(max_length=250, blank=True)
+    initial_latitude = models.CharField(default=0.0000000, max_length=200, blank=True)
+    initial_longitude = models.CharField(default=0.000000, max_length=200, blank=True)
+    destination_address = models.CharField(max_length=250, blank=True)
+    destination_latitude = models.CharField(default=0.0000000, max_length=200, blank=True)
+    destination_longitude = models.CharField(default=0.000000, max_length=200, blank=True)
+    date = models.DateTimeField(blank=True)
+    reference = models.CharField(max_length=250, blank=True)
     delivery_total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2, blank=True)
     state = models.CharField(max_length=50, blank=True)
-    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE,
+                                 blank=True)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
                                blank=True, null=True)
 
@@ -103,3 +104,12 @@ class CabRide(models.Model):
                                  blank=True)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
                                default='1', blank=True, null=True)
+
+
+class Taxi(models.Model):
+    plaque = models.CharField(max_length=50, blank=True)
+    model = models.CharField(max_length=50, blank=True)
+    brand = models.CharField(max_length=50, blank=True)
+    color = models.CharField(max_length=50, blank=True)
+    driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
+                               blank=True, null=True)
