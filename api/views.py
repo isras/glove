@@ -506,4 +506,14 @@ class TaxiOfDriver(generics.ListAPIView):
         return Taxi.objects.filter(driver__id=driver_id)
 
 
+class DriverTaxi(generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        user_id = self.kwargs['id']
+        return User.objects.filter(id=user_id)
 

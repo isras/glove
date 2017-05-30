@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^taxi/$', views.TaxiList.as_view()),
     url(r'^taxi/(?P<pk>[0-9]+)/$', views.TaxiDetail.as_view()),
     url('^taxi_driver/(?P<id>.+)/$', views.TaxiOfDriver.as_view()),
+    url('^taxi_user/(?P<id>.+)/$', views.DriverTaxi.as_view()),
 ]
