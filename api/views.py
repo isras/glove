@@ -494,4 +494,16 @@ class DriverCouponsHistoryList(generics.ListAPIView):
         return Coupon.objects.filter(driver__username=username).order_by('-date')
 
 
+class TaxiOfDriver(generics.ListAPIView):
+    serializer_class = TaxiSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        driver_id = self.kwargs['id']
+        return Taxi.objects.filter(driver__id=driver_id)
+
+
 
