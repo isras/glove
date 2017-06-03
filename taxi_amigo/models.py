@@ -78,17 +78,18 @@ class Delivery(models.Model):
 
 class BookTaxi(models.Model):
     date = models.DateTimeField()
-    hour = models.CharField(max_length=50)
-    address = models.CharField(max_length=250)
-    latitude = models.CharField(default=0.000000, max_length=200)
-    longitude = models.CharField(default=0.00000, max_length=200)
-    reference = models.CharField(max_length=250)
+    hour = models.CharField(max_length=50, blank=True)
+    address = models.CharField(max_length=250, blank=True)
+    latitude = models.CharField(default=0.000000, max_length=200, blank=True)
+    longitude = models.CharField(default=0.00000, max_length=200, blank=True)
+    reference = models.CharField(max_length=250, blank=True)
     destination_address = models.CharField(max_length=250, blank=True)
     destination_latitude = models.CharField(default=0.000000, max_length=200, blank=True)
     destination_longitude = models.CharField(default=0.00000, max_length=200, blank=True)
     state = models.CharField(max_length=50, blank=True)
-    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
-    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE)
+    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE, blank=True)
+    customer = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_customer', on_delete=models.CASCADE,
+                                 blank=True)
     driver = models.ForeignKey(User, related_name='%(app_label)s_%(class)s_driver', on_delete=models.CASCADE,
                                blank=True, null=True)
 
