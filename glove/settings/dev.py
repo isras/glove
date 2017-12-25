@@ -4,7 +4,7 @@ INSTALLED_APPS += (
     'debug_toolbar',
 )
 
-SECRET_KEY = os.getenv('TAXIAMIGO_SECRET_KEY', 'User')
+SECRET_KEY = os.environ.get("TAXIAMIGO_SECRET_KEY")
 
 DATABASES = {
     'default': {
