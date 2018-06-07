@@ -32,9 +32,11 @@ class BookTaxiForm(forms.ModelForm):
             else:
                 print (valor_propiedad)
                 header = {"Content-Type": "application/json; charset=utf-8",
-                          "Authorization": "Basic NDZjNzA5ZGEtYzE5Mi00ZTAxLWFiODItZTFjODk5N2ZkZjdk"}
+                          "Authorization": "key=AAAAx4QMurc:APA91bGEf4FEm1hpNv2GwfH_HycmR6wJhux8VLyQ"
+                                           "-H0WF6_ekienqLJ6Q_tf74gfG6QnlrOMusEC"
+                                           "-D3DISC3TczEZdNWosjWsXfmVx3itDscfCHEKmKwGW9JcQGlhjub4Z82u4sNcdIr"}
 
-                data = {"client": obj_propiedad.customer.id, "type": "reserva",
+                data = {"client": obj_propiedad.customer.id, "type": "reservation",
                         'id_notification': obj_propiedad.customer.player_id}
 
                 payload = dict(app_id="3a469011-9fde-40aa-bbd9-a25026f29222", include_player_ids=[valor_propiedad],

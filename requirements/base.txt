@@ -8,3 +8,4 @@ django-allauth==0.27.0
 django-rest-auth==0.8.1
 django-cors-headers==1.1.0
 django_filter==0.15.2
+fcm-django==0.2.19

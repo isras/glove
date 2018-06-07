@@ -1,3 +1,5 @@
+from django.db.models import Count
+
 from userprofiles.models import User
 from django.http import Http404
 from rest_framework import status
@@ -5,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, viewsets
 from django_filters import rest_framework as filters
+from rest_framework.renderers import JSONRenderer
 
 from api.serializers import DriverSerializer, UserSerializer, CabRideSerializer, CustomerSerializer, CouponSerializer, \
     DeliverySerializer, BookTaxiSerializer, ServiceTypeSerializer, ValueSettingsSerializer, TaxiSerializer
@@ -396,8 +399,9 @@ class CustomerCabRideHistoryList(generics.ListAPIView):
 
     def get_queryset(self):
         """
-        This view should return a list of all the purchases for
-        the user as determined by the username portion of the URL.
+        Esta vista te devuelve la lista de todas las carreras solicitadas por el cliente
+        determinadas por el username del cliente
+
         """
         username = self.kwargs['username']
         return CabRide.objects.filter(customer__username=username).order_by('-date')
@@ -517,3 +521,38 @@ class DriverTaxi(generics.ListAPIView):
         user_id = self.kwargs['id']
         return User.objects.filter(id=user_id)
 
+
+class LastCabRideByCostumerId(generics.ListAPIView):
+    serializer_class = CabRideSerializer
+
+    def get_queryset(self):
+        """
+        Esta vista va a retornar la ultima carrera de taxi solicitada por
+        un usuario determinado por el id como parte de la URL.
+        """
+        customer_id = self.kwargs['id']
+        return CabRide.objects.filter(customer__id=customer_id).order_by('-date')[:1]
+
+
+class LastDeliveryByCostumerId(generics.ListAPIView):
+    serializer_class = DeliverySerializer
+
+    def get_queryset(self):
+        """
+        Esta vista va a retornar la ultima carrera de taxi pidiendo una encomienda
+        por un usuario determinado por el id como parte de la URL.
+        """
+        customer_id = self.kwargs['id']
+        return Delivery.objects.filter(customer__id=customer_id).order_by('-date')[:1]
+
+
+class CabRideCountByUserView(APIView):
+    """
+    Vista que devuelve el total de carreras solicitadas por cliente en JSON
+    """
+    renderer_classes = (JSONRenderer, )
+
+    def get(self, request, pk, format=None):
+        cab_ride_count = CabRide.objects.filter(customer=pk, state='Completado').count()
+        content = {'cab_ride_customer_count': cab_ride_count}
+        return Response(content)

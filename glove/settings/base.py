@@ -15,6 +15,9 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    # Firebase Cloud Message
+    'fcm_django',
+
     # Admin
     'django.contrib.admin',
 
@@ -59,6 +62,10 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+FCM_DJANGO_SETTINGS = {
+        "FCM_SERVER_KEY": "[your api key]"
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASES': (
