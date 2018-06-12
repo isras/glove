@@ -42,7 +42,7 @@ class Customer(models.Model):
 
 
 class Coupon(models.Model):
-    coupon_code = models.CharField(max_length=50, blank=True)
+    coupon_code = models.CharField(max_length=50, unique=True)
     date = models.DateTimeField(blank=True)
     description = models.TextField(max_length=250, blank=True)
     status = models.BooleanField(default=True)

@@ -553,6 +553,30 @@ class CabRideCountByUserView(APIView):
     renderer_classes = (JSONRenderer, )
 
     def get(self, request, pk, format=None):
-        cab_ride_count = CabRide.objects.filter(customer=pk, state='Completado').count()
+        cab_ride_count = CabRide.objects.filter(customer=pk, state='finished').count()
         content = {'cab_ride_customer_count': cab_ride_count}
+        return Response(content)
+
+
+class BookTaxiCountByUserView(APIView):
+    """
+    Vista que devuelve el total de reservas solicitadas por cliente en JSON
+    """
+    renderer_classes = (JSONRenderer, )
+
+    def get(self, request, pk, format=None):
+        book_taxi_count = BookTaxi.objects.filter(customer=pk, state='finished').count()
+        content = {'book_taxi_customer_count': book_taxi_count}
+        return Response(content)
+
+
+class DeliveryCountByUserView(APIView):
+    """
+    Vista que devuelve el total de reservas solicitadas por cliente en JSON
+    """
+    renderer_classes = (JSONRenderer, )
+
+    def get(self, request, pk, format=None):
+        delivery_count = Delivery.objects.filter(customer=pk, state='finished').count()
+        content = {'delivery_customer_count': delivery_count}
         return Response(content)

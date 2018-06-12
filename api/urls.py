@@ -37,4 +37,6 @@ urlpatterns = [
     url(r'^cabride_costumer/(?P<id>.+)/$', views.LastCabRideByCostumerId.as_view()),
     url(r'^delivery_customer/(?P<id>.+)/$', views.LastDeliveryByCostumerId.as_view()),
     url(r'^cab_ride_count/(?P<pk>.+)/$', views.CabRideCountByUserView.as_view()),
+    url(r'^book_taxi_count/(?P<pk>.+)/$', views.BookTaxiCountByUserView.as_view()),
+    url(r'^delivery_count/(?P<pk>.+)/$', views.DeliveryCountByUserView.as_view()),
 ]

@@ -64,7 +64,8 @@ MIDDLEWARE_CLASSES = [
 ]
 
 FCM_DJANGO_SETTINGS = {
-        "FCM_SERVER_KEY": "[your api key]"
+        'FCM_SERVER_KEY': 'AAAAx4QMurc:APA91bGEf4FEm1hpNv2GwfH_HycmR6wJhux8VLyQ-H0WF6_ekienqLJ6Q_tf74gfG6QnlrOMusEC-D3'
+                          'DISC3TczEZdNWosjWsXfmVx3itDscfCHEKmKwGW9JcQGlhjub4Z82u4sNcdIr',
 }
 
 REST_FRAMEWORK = {

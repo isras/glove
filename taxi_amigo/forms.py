@@ -1,8 +1,6 @@
 from django import forms
-import requests
-import json
 from taxi_amigo.models import *
-from django.core.exceptions import ValidationError
+from fcm_django.models import FCMDevice
 
 
 class BookTaxiForm(forms.ModelForm):
@@ -18,38 +16,46 @@ class BookTaxiForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         # Sobrecargar save devuelve el objeto apunto de ser guardado
-        obj_propiedad = super(BookTaxiForm, self).save(*args, **kwargs)
+        book_taxi = super(BookTaxiForm, self).save(*args, **kwargs)
 
         # Podemos hacer lo que queramos antes de guardarlo
-        valor_propiedad = obj_propiedad.driver.player_id
-        book_hour = obj_propiedad.hour
+        customer_player_id = book_taxi.customer.player_id
+        book_hour = book_taxi.hour
 
-        if obj_propiedad.driver is None:
+        if book_taxi.driver is None:
             print ("EL TAXISTA NO HA SIDO ASIGNADO")
+            print(customer_player_id)
         else:
-            if valor_propiedad == "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" or valor_propiedad == "":
+            if customer_player_id == "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" or customer_player_id == "":
                 print ("AQUI ENTRO PORQUE EL VALOR ES POR DEFECTO")
             else:
-                print (valor_propiedad)
-                header = {"Content-Type": "application/json; charset=utf-8",
-                          "Authorization": "key=AAAAx4QMurc:APA91bGEf4FEm1hpNv2GwfH_HycmR6wJhux8VLyQ"
-                                           "-H0WF6_ekienqLJ6Q_tf74gfG6QnlrOMusEC"
-                                           "-D3DISC3TczEZdNWosjWsXfmVx3itDscfCHEKmKwGW9JcQGlhjub4Z82u4sNcdIr"}
+                driver_player_id = book_taxi.driver.player_id
+                print (driver_player_id)
+                body = book_taxi.address + book_taxi.reference
+                print(body)
+                print(book_taxi.service_type)
 
-                data = {"client": obj_propiedad.customer.id, "type": "reservation",
-                        'id_notification': obj_propiedad.customer.player_id}
+                device = FCMDevice.objects.all().first()
 
-                payload = dict(app_id="3a469011-9fde-40aa-bbd9-a25026f29222", include_player_ids=[valor_propiedad],
-                               contents={"en": "Usted tiene una reservacion de carrera a las: " + book_hour}, data=data)
+                device.registration_id = driver_player_id
 
-                req = requests.post("https://onesignal.com/api/v1/notifications", headers=header,
-                                    data=json.dumps(payload))
-
-                print(req.status_code, req.reason)
-
+                #device.send_message("Title", "Message")
+                #device.send_message(data={"test": "test"})
+                device.send_message(title="New ride request", body=body, badge="1", sound="default",
+                                    data={"request": {"type": "reservation", "mainStreet": book_taxi.address,
+                                                      "intersection": "", "reference": book_taxi.reference,
+                                                      "serviceType": str(book_taxi.service_type),
+                                                      "latitude": book_taxi.latitude,
+                                                      "longitude": book_taxi.longitude, "orderInfo": "null",
+                                                      "destination_address": book_taxi.destination_address,
+                                                      "destination_latitude": book_taxi.destination_latitude,
+                                                      "destination_longitude": book_taxi.destination_longitude,
+                                                      "state": book_taxi.state},
+                                          "rideInfo": "null", "clientId": 57,
+                                          "pushTokenClient": book_taxi.customer.player_id})
         # Y finalmente lo guardamos
-        # obj_propiedad.save()
-        return obj_propiedad
+        # book_taxi.save()
+        return book_taxi
 
     def clean(self):
         # Sobrecargar clean devuelve un diccionario con los campos
