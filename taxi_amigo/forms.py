@@ -51,7 +51,7 @@ class BookTaxiForm(forms.ModelForm):
                                                       "destination_latitude": book_taxi.destination_latitude,
                                                       "destination_longitude": book_taxi.destination_longitude,
                                                       "state": book_taxi.state},
-                                          "rideInfo": "null", "clientId": 57,
+                                          "rideInfo": "null", "clientId": book_taxi.customer.id,
                                           "pushTokenClient": book_taxi.customer.player_id})
         # Y finalmente lo guardamos
         # book_taxi.save()
